@@ -11,8 +11,10 @@ describe('SnippetLocator', () => {
 			const locations = locator.locateSnippets(text, snippets);
 
 			assert.strictEqual(locations.length, 1);
-			assert.strictEqual(locations[0].startOffset, 9); // After '--8<-- "'
-			assert.strictEqual(locations[0].endOffset, 25); // 9 + 16 (length of path)
+			// Verify the link underlines exactly the path, not the quotes
+			assert.strictEqual(text.substring(locations[0].startOffset, locations[0].endOffset), 'path/to/file.txt');
+			assert.strictEqual(locations[0].startOffset, 8); // After '--8<-- "'
+			assert.strictEqual(locations[0].endOffset, 24); // 8 + 16 (length of path only)
 			assert.strictEqual(locations[0].snippet.path, 'path/to/file.txt');
 		});
 
@@ -24,7 +26,9 @@ describe('SnippetLocator', () => {
 			const locations = locator.locateSnippets(text, snippets);
 
 			assert.strictEqual(locations.length, 1);
-			assert.strictEqual(locations[0].startOffset, 9);
+			// Verify the link underlines exactly the path, not the quotes
+			assert.strictEqual(text.substring(locations[0].startOffset, locations[0].endOffset), 'path/to/file.txt');
+			assert.strictEqual(locations[0].startOffset, 8);
 		});
 
 		it('should locate multiple snippets', () => {

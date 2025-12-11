@@ -7,6 +7,7 @@ export interface SnippetLocation {
 	snippet: SnippetInfo;
 	startOffset: number;
 	endOffset: number;
+	lineEndOffset: number; // Position after the closing quote for decorations
 }
 
 /**
@@ -35,13 +36,17 @@ export class SnippetLocator {
 
 			if (index !== -1) {
 				// Calculate offset to just the path (skip '--8<-- "' or "--8<-- '")
-				const startOffset = index + 9; // Length of '--8<-- "' or "--8<-- '"
+				const startOffset = index + 8; // Length of '--8<-- "' or "--8<-- '"
+				// End offset is at the end of the path, not including the quote (for link underline)
 				const endOffset = startOffset + snippet.path.length;
+				// Line end is after the closing quote (for decorations)
+				const lineEndOffset = endOffset + 1;
 
 				locations.push({
 					snippet,
 					startOffset,
-					endOffset
+					endOffset,
+					lineEndOffset
 				});
 			}
 		}

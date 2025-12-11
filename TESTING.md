@@ -16,6 +16,8 @@ These modules contain all core logic and have ZERO VS Code dependencies:
 - `snippetLocator.ts` - Finds snippet positions in text
 - `pathResolver.ts` - Resolves file paths with precedence logic
 - `linkCreation.ts` - Creates link information from locations and paths
+- `contentFormatter.ts` - Formats snippet content with line truncation
+- `inlineFormatter.ts` - Converts newlines to inline display symbols
 
 All business logic is tested in `src/test/standalone/**/*.test.ts` using plain
 Mocha (no VS Code runtime), with coverage tracked by c8.
@@ -27,6 +29,8 @@ Code API:
 
 - `snippetLinkProvider.ts` - Implements `vscode.DocumentLinkProvider` by
   delegating to layer 1 modules
+- `previewManager.ts` - Manages ghost text decorations by delegating to layer 1
+  modules
 - `extension.ts` - Extension activation and registration boilerplate
 
 These files are excluded from c8 standalone coverage because:
@@ -41,15 +45,23 @@ These files are excluded from c8 standalone coverage because:
 To verify complete test coverage:
 
 ```bash
-# Run standalone tests with c8 coverage (should show 100% for all Layer 1)
-npm run test:unit
+# Clean build output (recommended before running tests)
+npm run clean
 
-# Run VS Code integration tests (should pass for all Layer 2 modules)
+# Run standalone tests with c8 coverage (auto-cleans and compiles)
+npm run test:unit
+# or
+npm test
+
+# Run VS Code integration tests (auto-compiles)
 npm run test:integration
 
-# Run both
+# Run both (auto-cleans and compiles all)
 npm run test:all
 ```
+
+All test commands now automatically clean and compile before running, ensuring
+stale compiled output never causes issues.
 
 ## Why This Approach?
 
