@@ -160,7 +160,7 @@ Maintain **100% code coverage** at all times through TDD practice.
 - No code can be committed without 100% coverage
 
 ### Test Organization
-- Unit tests in `src/test/unit/` (create this directory)
+- Unit tests in `src/test/unit/`
 - Integration tests in `src/test/integration/`
 - Use descriptive test names: `should detect snippet with double quotes`
 - Group related tests with `describe` blocks

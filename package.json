@@ -36,7 +36,7 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
     "test": "npm run test:unit",
-    "test:unit": "c8 --100 mocha out/test/standalone/**/*.test.js",
+    "test:unit": "c8 --100 mocha out/test/unit/**/*.test.js",
     "pretest:integration": "npm run compile-tests && npm run compile",
     "test:integration": "vscode-test",
     "pretest:all": "npm run clean && npm run compile-tests && npm run compile",

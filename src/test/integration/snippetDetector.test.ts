@@ -1,9 +1,9 @@
 import * as assert from 'assert';
 import { SnippetDetector } from '../../snippetDetector';
 
-describe('SnippetDetector', () => {
-	describe('detect', () => {
-		it('should detect snippet with double quotes', () => {
+suite('SnippetDetector', () => {
+	suite('detect', () => {
+		test('should detect snippet with double quotes', () => {
 			const detector = new SnippetDetector();
 			const text = '--8<-- "path/to/file.txt"';
 			const result = detector.detect(text);
@@ -12,7 +12,7 @@ describe('SnippetDetector', () => {
 			assert.strictEqual(result[0].path, 'path/to/file.txt');
 		});
 
-		it('should detect snippet with single quotes', () => {
+		test('should detect snippet with single quotes', () => {
 			const detector = new SnippetDetector();
 			const text = "--8<-- 'path/to/file.txt'";
 			const result = detector.detect(text);
@@ -21,7 +21,7 @@ describe('SnippetDetector', () => {
 			assert.strictEqual(result[0].path, 'path/to/file.txt');
 		});
 
-		it('should return empty array when no snippets found', () => {
+		test('should return empty array when no snippets found', () => {
 			const detector = new SnippetDetector();
 			const text = 'This is just regular markdown text';
 			const result = detector.detect(text);
@@ -29,7 +29,7 @@ describe('SnippetDetector', () => {
 			assert.strictEqual(result.length, 0);
 		});
 
-		it('should detect multiple snippets', () => {
+		test('should detect multiple snippets', () => {
 			const detector = new SnippetDetector();
 			const text = '--8<-- "file1.txt"\nSome text\n--8<-- "file2.txt"';
 			const result = detector.detect(text);
@@ -39,7 +39,7 @@ describe('SnippetDetector', () => {
 			assert.strictEqual(result[1].path, 'file2.txt');
 		});
 
-		it('should handle whitespace after --8<--', () => {
+		test('should handle whitespace after --8<--', () => {
 			const detector = new SnippetDetector();
 			const text = '--8<--   "path/to/file.txt"';
 			const result = detector.detect(text);

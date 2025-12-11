@@ -19,7 +19,7 @@ These modules contain all core logic and have ZERO VS Code dependencies:
 - `contentFormatter.ts` - Formats snippet content with line truncation
 - `inlineFormatter.ts` - Converts newlines to inline display symbols
 
-All business logic is tested in `src/test/standalone/**/*.test.ts` using plain
+All business logic is tested in `src/test/unit/**/*.test.ts` using plain
 Mocha (no VS Code runtime), with coverage tracked by c8.
 
 ### Layer 2: VS Code Glue Code (Tested via Integration Tests)
@@ -38,7 +38,7 @@ These files are excluded from c8 standalone coverage because:
 1. They import `vscode` module which can't be loaded in Node.js/Mocha
 2. They contain minimal logic - mostly just gluing together Layer 1 components
 3. They are thoroughly tested via integration tests in
-   `src/test/unit/**/*.test.ts` which run in a real VS Code extension host
+   `src/test/integration/**/*.test.ts` which run in a real VS Code extension host
 
 ## Verification
 
