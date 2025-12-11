@@ -17,10 +17,32 @@
   "contributes": {
     "commands": [
       {
-        "command": "mkdocs-snippet-lens.helloWorld",
-        "title": "Hello World"
+        "command": "mkdocs-snippet-lens.toggleAllPreviews",
+        "title": "MkDocs Snippet Lens: Toggle All Previews"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "MkDocs Snippet Lens",
+      "properties": {
+        "mkdocsSnippetLens.basePath": {
+          "type": "string",
+          "default": "",
+          "description": "Base directory for resolving snippet paths (relative to workspace root)"
+        },
+        "mkdocsSnippetLens.previewMaxLines": {
+          "type": "number",
+          "default": 20,
+          "minimum": 1,
+          "description": "Maximum number of lines to show in inline preview"
+        },
+        "mkdocsSnippetLens.previewMaxChars": {
+          "type": "number",
+          "default": 200,
+          "minimum": 10,
+          "description": "Maximum number of characters to show in inline preview"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",

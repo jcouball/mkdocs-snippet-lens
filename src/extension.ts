@@ -51,12 +51,23 @@ export function activate(context: vscode.ExtensionContext) {
 		.filter(editor => editor.document.languageId === 'markdown')
 		.forEach(editor => previewManager.updatePreviews(editor.document));
 
+	// Register toggle command
+	const toggleCommand = vscode.commands.registerCommand(
+		'mkdocs-snippet-lens.toggleAllPreviews',
+		() => {
+			previewManager.toggle();
+			const status = previewManager.isEnabled() ? 'enabled' : 'disabled';
+			vscode.window.showInformationMessage(`MkDocs Snippet Lens: Previews ${status}`);
+		}
+	);
+
 	context.subscriptions.push(
 		linkProviderDisposable,
 		previewManager,
 		hoverDisposable,
 		changeDisposable,
-		editorDisposable
+		editorDisposable,
+		toggleCommand
 	);
 }
 
