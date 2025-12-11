@@ -59,6 +59,7 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
     "test": "npm run test:unit",
+    "pretest:unit": "npm run compile-tests",
     "test:unit": "c8 --100 --exclude 'out/extension.js' --exclude 'out/snippetLinkProvider.js' --exclude 'out/snippetHoverProvider.js' --exclude 'out/previewManager.js' --exclude 'out/diagnosticManager.js' --exclude 'out/test/**' mocha out/test/unit/**/*.test.js",
     "pretest:integration": "npm run compile-tests && npm run compile",
     "test:integration": "vscode-test",

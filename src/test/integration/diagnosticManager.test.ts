@@ -18,11 +18,16 @@ suite('DiagnosticManager Integration Tests', () => {
 		// Open the document in an editor to trigger diagnostics
 		await vscode.window.showTextDocument(doc);
 
-		// Wait a bit for diagnostics to be processed
-		await new Promise(resolve => setTimeout(resolve, 200));
-
-		const diagnostics = vscode.languages.getDiagnostics(doc.uri);
-		const snippetDiagnostics = diagnostics.filter(d => d.source === 'mkdocs-snippet-lens');
+		// Wait for diagnostics to be processed with retry logic
+		let snippetDiagnostics: vscode.Diagnostic[] = [];
+		for (let i = 0; i < 10; i++) {
+			await new Promise(resolve => setTimeout(resolve, 100));
+			const diagnostics = vscode.languages.getDiagnostics(doc.uri);
+			snippetDiagnostics = diagnostics.filter(d => d.source === 'mkdocs-snippet-lens');
+			if (snippetDiagnostics.length > 0) {
+				break;
+			}
+		}
 
 		assert.strictEqual(snippetDiagnostics.length, 1);
 		assert.strictEqual(snippetDiagnostics[0].message, "Snippet file not found: 'this-file-does-not-exist.txt'");
@@ -40,11 +45,16 @@ suite('DiagnosticManager Integration Tests', () => {
 		// Open the document in an editor to trigger diagnostics
 		await vscode.window.showTextDocument(doc);
 
-		// Wait a bit for diagnostics to be processed
-		await new Promise(resolve => setTimeout(resolve, 200));
-
-		const diagnostics = vscode.languages.getDiagnostics(doc.uri);
-		const snippetDiagnostics = diagnostics.filter(d => d.source === 'mkdocs-snippet-lens');
+		// Wait for diagnostics to be processed with retry logic
+		let snippetDiagnostics: vscode.Diagnostic[] = [];
+		for (let i = 0; i < 10; i++) {
+			await new Promise(resolve => setTimeout(resolve, 100));
+			const diagnostics = vscode.languages.getDiagnostics(doc.uri);
+			snippetDiagnostics = diagnostics.filter(d => d.source === 'mkdocs-snippet-lens');
+			if (snippetDiagnostics.length === 2) {
+				break;
+			}
+		}
 
 		assert.strictEqual(snippetDiagnostics.length, 2);
 		assert.ok(snippetDiagnostics[0].message.includes('missing-file-1.txt'));
@@ -61,8 +71,8 @@ suite('DiagnosticManager Integration Tests', () => {
 		// Open the document in an editor to trigger diagnostics
 		await vscode.window.showTextDocument(doc);
 
-		// Wait a bit to ensure diagnostics would have been processed if they were going to be
-		await new Promise(resolve => setTimeout(resolve, 200));
+		// Wait to ensure diagnostics would have been processed if they were going to be
+		await new Promise(resolve => setTimeout(resolve, 300));
 
 		const diagnostics = vscode.languages.getDiagnostics(doc.uri);
 		const snippetDiagnostics = diagnostics.filter(d => d.source === 'mkdocs-snippet-lens');

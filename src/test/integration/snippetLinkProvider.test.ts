@@ -1,5 +1,6 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { SnippetLinkProvider } from '../../snippetLinkProvider';
 import { SnippetDetector } from '../../snippetDetector';
 import { PathResolver } from '../../pathResolver';
@@ -22,6 +23,9 @@ suite('SnippetLinkProvider', () => {
 
 		assert.strictEqual(links?.length, 1);
 		assert.ok(links![0].target);
-		assert.strictEqual(links![0].target!.fsPath, '/workspace/docs/path/to/file.txt');
+		// Normalize paths for cross-platform compatibility
+		const expectedPath = path.normalize('/workspace/docs/path/to/file.txt');
+		const actualPath = path.normalize(links![0].target!.fsPath);
+		assert.strictEqual(actualPath, expectedPath);
 	});
 });
